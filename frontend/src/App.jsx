@@ -178,11 +178,6 @@ function HeroLanding({ onGetStarted }) {
                     <span className="material-symbols-outlined text-primary text-2xl">hexagon</span>
                     <span className="font-display-lg text-headline-md font-bold text-primary tracking-tighter">GitScope</span>
                 </div>
-                <div className="flex gap-md items-center">
-                    <a className="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors px-md py-sm hidden sm:inline" href="#">Documentation</a>
-                    <a className="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors px-md py-sm hidden sm:inline" href="#">Pricing</a>
-                    <button className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-lg py-sm rounded glow-bloom hover:bg-primary transition-colors" onClick={onGetStarted}>Sign In</button>
-                </div>
             </nav>
 
             {/* Main Hero */}
@@ -257,7 +252,7 @@ function HeroLanding({ onGetStarted }) {
 }
 
 // ─── Connect Repository Page ────────────────────────────────────────────────
-function ConnectRepo({ repo, setRepo, load, ingest, loading, ingesting, error, ingestMsg }) {
+function ConnectRepo({ repo, setRepo, load, ingest, loading, ingesting, error, ingestMsg, goHome }) {
     const chips = [
         { label: "vercel/next.js", icon: "deployed_code" },
         { label: "facebook/react", icon: "deployed_code" },
@@ -271,6 +266,12 @@ function ConnectRepo({ repo, setRepo, load, ingest, loading, ingesting, error, i
                 <div className="absolute inset-0 w-full h-full grid-bg pointer-events-none"></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/90 pointer-events-none"></div>
             </div>
+            <nav className="absolute top-0 w-full flex items-center justify-start px-lg py-md z-50">
+                <button className="flex items-center gap-sm hover:opacity-80 transition-opacity group" onClick={goHome}>
+                    <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[20px]">arrow_back</span>
+                    <span className="font-label-caps text-label-caps text-on-surface-variant group-hover:text-primary transition-colors">Return to Home</span>
+                </button>
+            </nav>
             <main className="relative z-10 flex items-center justify-center min-h-screen p-md">
                 <div className="bg-surface/80 backdrop-blur-xl border border-outline-variant/30 rounded-xl p-xl shadow-[0_0_30px_rgba(10,22,40,0.5)] w-full max-w-[560px] relative animate-fade-in-up">
                     {/* Optical Corner */}
@@ -511,7 +512,7 @@ function IngestingView({ repo }) {
 }
 
 // ─── Dashboard View ─────────────────────────────────────────────────────────
-function Dashboard({ repo, data, summary, load, setData }) {
+function Dashboard({ repo, data, summary, load, setData, goHome }) {
     const churn = data.churn_files || [];
     const trend = data.cycle_trend || [];
     const dora = data.dora || {};
@@ -550,7 +551,9 @@ function Dashboard({ repo, data, summary, load, setData }) {
             {/* Top Nav Bar */}
             <header className="hidden md:flex items-center justify-between px-xl w-full z-40 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 sticky top-0 h-[72px]">
                 <div className="flex items-center gap-md">
-                    <span className="material-symbols-outlined text-primary text-[28px]">terminal</span>
+                    <button className="flex items-center gap-sm hover:opacity-80 transition-opacity" onClick={goHome}>
+                        <span className="material-symbols-outlined text-primary text-[28px]">hexagon</span>
+                    </button>
                     <span className="font-display-lg text-[20px] font-bold text-glow tracking-tight">{repo}</span>
                     <div className="h-4 w-px bg-outline-variant/50 mx-sm"></div>
                     <span className="bg-tertiary/20 text-tertiary px-sm py-xs rounded text-xs font-code-md font-bold uppercase tracking-widest border border-tertiary/30">Active</span>
@@ -570,7 +573,9 @@ function Dashboard({ repo, data, summary, load, setData }) {
             {/* Mobile Header */}
             <header className="md:hidden flex items-center justify-between px-md py-sm bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 sticky top-0 z-40">
                 <div className="flex items-center gap-sm">
-                    <span className="material-symbols-outlined text-primary text-[28px]">terminal</span>
+                    <button className="flex items-center gap-sm hover:opacity-80 transition-opacity" onClick={goHome}>
+                        <span className="material-symbols-outlined text-primary text-[28px]">hexagon</span>
+                    </button>
                     <span className="font-display-lg text-[18px] font-bold text-glow tracking-tight">{repo}</span>
                 </div>
                 <div className="flex items-center gap-sm">
@@ -830,6 +835,7 @@ export default function App() {
                 summary={summary}
                 load={load}
                 setData={setData}
+                goHome={() => setView("hero")}
             />
         );
     }
@@ -844,6 +850,7 @@ export default function App() {
             ingesting={ingesting}
             error={error}
             ingestMsg={ingestMsg}
+            goHome={() => setView("hero")}
         />
     );
 }
