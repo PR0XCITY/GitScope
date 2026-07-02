@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ── */
+body {
+  @apply bg-background text-on-background font-body-md antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(128, 131, 255, 0.3);
+  color: #4cd7f6;
+}
+
+/* ── Glassmorphism Panels ── */
+@layer utilities {
+  .glass-panel {
+    background: rgba(10, 22, 40, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(30, 58, 95, 0.6);
+    position: relative;
+  }
+
+  .glass-panel-hover {
+    @apply hover:border-secondary/50 transition-all duration-300;
+  }
+
+  .glass-panel-hover:hover {
+    box-shadow: 0 0 15px 0px rgba(128, 131, 255, 0.15);
+  }
+}
+
+/* ── Optical Corner Highlights ── */
+.optical-corner {
+  position: relative;
+}
+.optical-corner::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 10px;
+  height: 1px;
+  background-color: #4cd7f6;
+  box-shadow: 0 0 8px rgba(76, 215, 246, 0.8);
+  z-index: 1;
+}
+
+/* ── Glow Effects ── */
+.glow-bloom {
+  box-shadow: 0 0 15px 0px rgba(192, 193, 255, 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(192, 193, 255, 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #8083ff, #4cd7f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.input-glow-focus:focus {
+  box-shadow: 0 4px 15px rgba(76, 215, 246, 0.3);
+  border-bottom-color: #4cd7f6;
+}
+
+.btn-glow-hover:hover {
+  box-shadow: 0 0 20px rgba(128, 131, 255, 0.4);
+}
+
+/* ── Grid Background ── */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* ── Perspective Grid ── */
+.perspective-grid {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  height: 50vh;
+  background-image:
+    linear-gradient(to right, rgba(76, 215, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(to top, rgba(76, 215, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: bottom;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Starfield ── */
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: drift linear infinite;
+}
+
+/* ── Typewriter ── */
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid #4cd7f6;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #4cd7f6; }
+}
+
+/* ── Floating Animation ── */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+.floating-delay {
+  animation: float 6s ease-in-out infinite 3s;
+}
+
+/* ── Pulse Indicator ── */
+@keyframes pulseIndicator {
+  0% { box-shadow: 0 0 0 0 rgba(76, 215, 246, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(76, 215, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 215, 246, 0); }
+}
+
+.pulse-indicator {
+  animation: pulseIndicator 2s infinite;
+}
+
+/* ── Fade Transitions (ingestion status text) ── */
+.fade-transition {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.fade-out {
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+/* ── Terminal Log Entry Animation ── */
+@keyframes scrollUpLogs {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.log-entry {
+  animation: scrollUpLogs 0.3s ease-out forwards;
+}
+
+/* ── Slide Up (for ingestion logs) ── */
+@keyframes slideUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ── Stagger Fade-in for cards ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-600 { animation-delay: 600ms; }
